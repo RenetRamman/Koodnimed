@@ -12,8 +12,8 @@ class ContactService {
         return data;
     }
 
-    getNafterMcontacts(n, m) {
-        var data = axios.get(CONTACT_API_N_AFTER_M_CONTACTS_ULR + "?n=" + n + "&m=" + m)
+    getNafterMcontacts(n, m, by) {
+        var data = axios.get(CONTACT_API_N_AFTER_M_CONTACTS_ULR + "?n=" + n + "&m=" + m + "&by=" + by)
         return data;
     }
 

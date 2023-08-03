@@ -6,11 +6,11 @@
             <table class = "table table-striped">
                 <thead>
                     <tr>
-                        <th> Nimi</th>
-                        <th> Koodnimi</th>
-                        <th> Telefon</th>
+                        <th> <button @click="setSortCriteria( 'name'); getNextContacts(n, 0)"> Nimi</button></th>
+                        <th> <button @click="setSortCriteria( 'codename'); getNextContacts(n, 0)"> Koodnimi</button></th>
+                        <th> <button @click="setSortCriteria( 'phone'); getNextContacts(n, 0)"> Telefon</button></th>
                     </tr>
-
+                    <p>{{sortBy}} {{sortDirection}}</p>
                 </thead>
                 <tbody>
                     <tr v-for="contact in contacts" v-bind:key="contact.id">
@@ -51,10 +51,29 @@ export default {
             n: 10,
             m: 0,
             previousAvailable: false,
-            nextAvailable: true
+            nextAvailable: true,
+            sortBy: "name",
+            sortDirection: "asc"
         }
     },
     methods: {
+        setSortCriteria(by) {
+            this.contacts = [];
+            this.sortBy = by;
+            if (this.sortBy === by) {
+                if (this.sortDirection === "asc") {
+                    this.sortDirection = "desc";
+                }
+                else {
+                    this.sortDirection = "asc";
+                }
+            }
+            else {
+                this.sortBy = by;
+                this.sortDirection = "asc";
+            }
+        },
+
         getContacts(){
             ContactService.getContacts().then((response) => {
                 this.contacts = response.data;   
@@ -77,14 +96,16 @@ export default {
         },
 
         getNextContacts(n, m) {
-            ContactService.getNafterMcontacts(n, m).then((response) => {
+            ContactService.getNafterMcontacts(n, m, this.sortBy + "_" + this.sortDirection).then((response) => {
                 this.contacts = response.data;
+                var last = this.contacts.pop();
+                this.contacts.push(last);
                 this.nextAndPreviousAvailable();
             });
         },
 
         getPreviousContacts(n, m) {
-            ContactService.getNafterMcontacts(n, m).then((response) => {
+            ContactService.getNafterMcontacts(n, m, this.sortBy + "_" + this.sortDirection).then((response) => {
                 this.contacts = response.data;
                 this.nextAndPreviousAvailable();
             });
@@ -95,7 +116,7 @@ export default {
         }
     },
     created() {
-        this.getNextContacts(this.n, 0);
+        this.getNextContacts(this.n, 0, this.sortBy + "_" + this.sortDirection);
     }
 }
 

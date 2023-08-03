@@ -1,5 +1,8 @@
 package com.example.demo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -42,13 +45,32 @@ public class MainController {
   }
 
   @GetMapping(path="/nafterm")
-  public @ResponseBody Iterable<Contact> getNafterMusers(
+  public @ResponseBody Iterable<Contact> getNafterMcontacts(
     @RequestParam(value = "n", defaultValue = "10") String n,
     @RequestParam(value = "m", defaultValue = "0") String m,
-    @RequestParam(value = "by", defaultValue = "id") String by,
-    @RequestParam(value = "order", defaultValue = "asc") String order
+    @RequestParam(value = "by", defaultValue = "name_asc") String by
   ) {
-    return contactRepository.findNafterM(Integer.parseInt(n), Integer.parseInt(m));
+    List<Contact> c = new ArrayList<Contact>();
+    if (by.equals("name_asc")){
+      c = contactRepository.findNafterMbyNameAsc(Integer.parseInt(n), Integer.parseInt(m));
+    }
+    else if (by.equals("name_desc")) {
+      c = contactRepository.findNafterMbyNameDesc(Integer.parseInt(n), Integer.parseInt(m));
+    }
+    else if (by.equals("codename_asc")) {
+      c = contactRepository.findNafterMbyCodenameAsc(Integer.parseInt(n), Integer.parseInt(m));
+    }
+    else if (by.equals("codename_desc")) {
+      c = contactRepository.findNafterMbyCodenameDesc(Integer.parseInt(n), Integer.parseInt(m));
+    }
+    else if (by.equals("phone_asc")) {
+      c = contactRepository.findNafterMbyPhoneAsc(Integer.parseInt(n), Integer.parseInt(m));
+    }
+    else {
+      c = contactRepository.findNafterMbyPhoneDesc(Integer.parseInt(n), Integer.parseInt(m));
+    }
+    // System.out.println(c);
+    return c;
   }
 
 }
