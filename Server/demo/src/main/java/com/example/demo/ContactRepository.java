@@ -13,8 +13,9 @@ public interface ContactRepository extends CrudRepository<Contact, Integer> {
   @Query(value = "select * from contact offset ?2 rows fetch first ?1 rows only", nativeQuery = true)
   ArrayList<Contact> findNafterM(int n, int m);
 
+  //              select * from contact order by name asc offset 0 rows fetch first 2 rows only;
   @Query(value = "select * from contact order by ?3 ?4 offset ?2 rows fetch first ?1 rows only", nativeQuery = true)
-  ArrayList<Contact> findNafterMsorted(int n, int m, String by, String asc);
+  ArrayList<Contact> findNafterMsorted(int n, int m, String by, String order);
 
   // select * from contact offset 1 rows fetch first 10 rows only;
   

@@ -20,8 +20,8 @@
                         <td> {{contact.phone}}</td>
                     </tr>
                     <div>
-                        <button v-if="previousAvailable" @click="getPreviousContacts(n, m-=2)">&lt;</button>
-                        <button v-if="nextAvailable" @click="getNextContacts(n, m+=2)">&gt;</button>
+                        <button v-if="previousAvailable" @click="getPreviousContacts(n, m-=n)">&lt;</button>
+                        <button v-if="nextAvailable" @click="getNextContacts(n, m+=n)">&gt;</button>
                     </div>
                 </tbody>
             </table>

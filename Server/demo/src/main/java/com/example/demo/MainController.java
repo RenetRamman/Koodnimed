@@ -44,7 +44,9 @@ public class MainController {
   @GetMapping(path="/nafterm")
   public @ResponseBody Iterable<Contact> getNafterMusers(
     @RequestParam(value = "n", defaultValue = "10") String n,
-    @RequestParam(value = "m", defaultValue = "0") String m
+    @RequestParam(value = "m", defaultValue = "0") String m,
+    @RequestParam(value = "by", defaultValue = "id") String by,
+    @RequestParam(value = "order", defaultValue = "asc") String order
   ) {
     return contactRepository.findNafterM(Integer.parseInt(n), Integer.parseInt(m));
   }
