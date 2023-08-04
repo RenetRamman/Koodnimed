@@ -4,6 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
+/**
+ * Kontakti struktuuri määrav klass
+ */
 @Entity
 public class Contact {
   @Id
@@ -12,7 +15,6 @@ public class Contact {
   String name;
   String codename;
   int phone;
-
 
   public long getId() {
     return this.id;
